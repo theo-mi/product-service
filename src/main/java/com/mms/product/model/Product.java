@@ -7,8 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
