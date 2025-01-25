@@ -46,6 +46,12 @@ public class BrandController {
     return ResponseEntity.ok(brandId);
   }
 
+  /**
+   * 브랜드를 삭제한다.
+   *
+   * @param id 브랜드 ID
+   * @return 브랜드 ID
+   */
   @DeleteMapping("/{id}")
   public ResponseEntity<Long> deleteBrand(@PathVariable Long id) {
     final Long brandId = brandService.delete(id);
