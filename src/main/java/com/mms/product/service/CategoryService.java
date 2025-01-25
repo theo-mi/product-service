@@ -21,4 +21,13 @@ public class CategoryService {
     return categoryRepository.findAll();
   }
 
+  /**
+   * 이름으로 카테고리를 조회한다.
+   *
+   * @param name 카테고리 이름
+   * @return 카테고리
+   */
+  public Category getByName(String name) {
+    return categoryRepository.findByName(name);
+  }
 }
