@@ -1,5 +1,6 @@
 package com.mms.product.service;
 
+import com.mms.product.model.Brand;
 import com.mms.product.model.Category;
 import com.mms.product.model.Outfit;
 import com.mms.product.model.Product;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OutfitService {
 
+  private final BrandService brandService;
   private final CategoryService categoryService;
   private final ProductService productService;
 
@@ -27,5 +29,32 @@ public class OutfitService {
     });
 
     return outfit;
+  }
+
+  /**
+   * 가장 저렴한 브랜드의 옷 조합을 조회한다.
+   *
+   * @return 가장 저렴한 브랜드의 옷 조합
+   */
+  public Outfit getCheapestOutfitByBrand() {
+    final List<Brand> brands = brandService.getAllBrands();
+    final List<Category> categories = categoryService.getAllCategories();
+
+    Outfit cheapestBrandOutfit = Outfit.of();
+
+    for (Brand brand : brands) {
+      Outfit outfit = Outfit.of();
+
+      for (Category category : categories) {
+        Product cheapestProductByBrand = productService.getCheapestBy(brand, category);
+        outfit.add(category, cheapestProductByBrand);
+      }
+
+      if (cheapestBrandOutfit.isEmpty() || outfit.moreThanCheapest(cheapestBrandOutfit)) {
+        cheapestBrandOutfit = outfit;
+      }
+    }
+
+    return cheapestBrandOutfit;
   }
 }

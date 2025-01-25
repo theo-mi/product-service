@@ -31,6 +31,25 @@ public class Outfit {
         .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
+  /**
+   * 현재 옷 조합의 가격이 outfit의 가격보다 더 저렴한지 확인한다.
+   *
+   * @param target 비교할 옷 조합
+   * @return 현재 옷 조합이 더 저렴하면 true, 아니면 false
+   */
+  public boolean moreThanCheapest(Outfit target) {
+    return this.getTotalPrice().compareTo(target.getTotalPrice()) < 0;
+  }
+
+  /**
+   * 옷 조합이 비어있는지 확인한다.
+   *
+   * @return 옷 조합이 비어있으면 true, 아니면 false
+   */
+  public boolean isEmpty() {
+    return outfit.isEmpty();
+  }
+
   public static Outfit of() {
     return Outfit.builder()
         .outfit(new HashMap<>())
