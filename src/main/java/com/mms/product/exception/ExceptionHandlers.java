@@ -3,11 +3,13 @@ package com.mms.product.exception;
 import com.mms.product.model.response.DefaultErrorDetailResponse;
 import com.mms.product.model.response.DefaultErrorResponse;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 @RestControllerAdvice
 public class ExceptionHandlers {
@@ -27,10 +29,26 @@ public class ExceptionHandlers {
         .body(DefaultErrorResponse.fail(e.getMessage()));
   }
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<DefaultErrorResponse> handleValidateException(MethodArgumentNotValidException e) {
+  @ExceptionHandler(HandlerMethodValidationException.class)
+  public ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException e) {
+    List<DefaultErrorDetailResponse> errorDetails = e.getParameterValidationResults().stream()
+        .map(result ->
+            DefaultErrorDetailResponse.builder()
+                .field(result.getMethodParameter().getParameterName())
+                .value(Objects.requireNonNull(result.getArgument()).toString())
+                .message(result.getResolvableErrors().getFirst().getDefaultMessage())
+                .build())
+        .toList();
 
-    List<DefaultErrorDetailResponse> errorDetails = e.getBindingResult().getFieldErrors().stream()
+    return ResponseEntity
+        .badRequest()
+        .body(DefaultErrorResponse.fail("입력값에 오류가 있습니다.", errorDetails));
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+
+    List<DefaultErrorDetailResponse> errorDetails = e.getFieldErrors().stream()
         .map(fieldError -> DefaultErrorDetailResponse.builder()
             .field(fieldError.getField())
             .value(String.valueOf(fieldError.getRejectedValue()))
