@@ -3,6 +3,8 @@ package com.mms.product.controller;
 import com.mms.product.model.request.ProductRequest;
 import com.mms.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,6 +39,9 @@ public class ProductController {
   }
 
   @Operation(summary = "상품 수정", description = "수정된 상품의 id를 반환.")
+  @Parameters(
+      @Parameter(name = "id", description = "상품 id", example = "73", required = true)
+  )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
   })
@@ -48,6 +53,9 @@ public class ProductController {
   }
 
   @Operation(summary = "상품 삭제", description = "삭제된 상품의 id를 반환.")
+  @Parameters(
+      @Parameter(name = "id", description = "상품 id", example = "73", required = true)
+  )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "삭제 완료"),
   })

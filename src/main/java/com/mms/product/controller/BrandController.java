@@ -3,6 +3,8 @@ package com.mms.product.controller;
 import com.mms.product.model.request.BrandRequest;
 import com.mms.product.service.BrandService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,6 +38,9 @@ public class BrandController {
   }
 
   @Operation(summary = "브랜드 수정", description = "수정된 브랜드의 id를 반환.")
+  @Parameters(
+      @Parameter(name = "id", description = "브랜드 id", example = "10", required = true)
+  )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
   })
@@ -47,6 +52,9 @@ public class BrandController {
   }
 
   @Operation(summary = "브랜드 삭제", description = "삭제된 브랜드의 id를 반환.")
+  @Parameters(
+      @Parameter(name = "id", description = "브랜드 id", example = "10", required = true)
+  )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "삭제 완료"),
   })

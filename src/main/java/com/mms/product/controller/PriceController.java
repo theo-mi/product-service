@@ -6,6 +6,8 @@ import com.mms.product.model.response.MinMaxProductResponse;
 import com.mms.product.service.CategoryService;
 import com.mms.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +27,9 @@ public class PriceController {
   private final ProductService productService;
 
   @Operation(summary = "카테고리별 최저가, 최고가 조회", description = "카테고리별 최저/최고가 반환.")
+  @Parameters(
+      @Parameter(name = "categoryName", description = "카테고리명", required = true)
+  )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "조회 성공"),
   })
