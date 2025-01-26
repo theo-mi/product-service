@@ -4,6 +4,8 @@ import com.mms.product.model.Brand;
 import com.mms.product.model.Category;
 import com.mms.product.model.Product;
 import com.mms.product.repository.ProductRepository;
+import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-
   private final ProductRepository productRepository;
+
+  private final CategoryService categoryService;
+  private final BrandService brandService;
 
   /**
    * 카테고리에서 최저가 상품을 조회한다.
@@ -57,5 +61,56 @@ public class ProductService {
     return minPriceProductByBrandAndCategory.getLast();
   }
 
+  /**
+   * 상품을 추가한다.
+   *
+   * @param categoryId 카테고리 id
+   * @param brandId    브랜드 id
+   * @param price      가격
+   * @return 추가된 상품의 id
+   */
+  @Transactional
+  public Long add(Long categoryId, Long brandId, BigDecimal price) {
+    final Category category = categoryService.getById(categoryId);
+    final Brand brand = brandService.getById(brandId);
 
+    final Product product = productRepository.save(Product.of(category, brand, price));
+
+    return product.getId();
+  }
+
+  /**
+   * 상품을 수정한다.
+   *
+   * @param productId  상품의 id
+   * @param categoryId 카테고리 id
+   * @param brandId    브랜드 id
+   * @param price      가격
+   * @return 수정된 상품의 id
+   */
+  @Transactional
+  public Long update(Long productId, Long categoryId, Long brandId, BigDecimal price) {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new IllegalArgumentException(String.format("해당 상품이 존재하지 않습니다. (id: %d)", productId)));
+
+    final Category category = categoryService.getById(categoryId);
+    final Brand brand = brandService.getById(brandId);
+
+    product.update(category, brand, price);
+
+    return productId;
+  }
+
+  /**
+   * 상품을 삭제한다.
+   *
+   * @param id 상품 id
+   * @return 삭제된 상품 id
+   */
+  @Transactional
+  public Long delete(Long id) {
+    productRepository.deleteById(id);
+
+    return id;
+  }
 }
