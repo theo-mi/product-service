@@ -110,7 +110,10 @@ public class ProductService {
    */
   @Transactional
   public Long delete(Long id) {
-    productRepository.deleteById(id);
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(String.format("해당 상품이 존재하지 않습니다. (id: %d)", id)));
+
+    productRepository.deleteById(product.getId());
 
     return id;
   }

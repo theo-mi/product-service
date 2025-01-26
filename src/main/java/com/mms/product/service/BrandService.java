@@ -71,7 +71,10 @@ public class BrandService {
    * @return 삭제된 브랜드의 id
    */
   public Long delete(Long id) {
-    brandRepository.deleteById(id);
+    Brand brand = brandRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(String.format("해당 브랜드가 존재하지 않습니다. (id: %d)", id)));
+
+    brandRepository.deleteById(brand.getId());
 
     return id;
   }
