@@ -1,4 +1,4 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.error;
 
 import lombok.Builder;
 import lombok.Getter;

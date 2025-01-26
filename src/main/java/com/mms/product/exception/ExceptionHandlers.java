@@ -1,7 +1,7 @@
 package com.mms.product.exception;
 
-import com.mms.product.model.response.DefaultErrorDetailResponse;
-import com.mms.product.model.response.DefaultErrorResponse;
+import com.mms.product.model.response.error.DefaultErrorDetailResponse;
+import com.mms.product.model.response.error.DefaultErrorResponse;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Objects;

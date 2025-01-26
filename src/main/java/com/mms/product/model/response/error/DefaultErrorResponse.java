@@ -1,4 +1,4 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.error;
 
 import java.util.List;
 import lombok.AccessLevel;
