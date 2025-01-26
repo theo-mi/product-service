@@ -1,5 +1,6 @@
 package com.mms.product.service;
 
+import com.mms.product.exception.NotFoundException;
 import com.mms.product.model.entity.Brand;
 import com.mms.product.model.entity.Category;
 import com.mms.product.model.entity.Product;
@@ -91,7 +92,7 @@ public class ProductService {
   @Transactional
   public Long update(Long productId, Long categoryId, Long brandId, BigDecimal price) {
     Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new IllegalArgumentException(String.format("해당 상품이 존재하지 않습니다. (id: %d)", productId)));
+        .orElseThrow(() -> new NotFoundException(String.format("해당 상품이 존재하지 않습니다. (id: %d)", productId)));
 
     final Category category = categoryService.getById(categoryId);
     final Brand brand = brandService.getById(brandId);
