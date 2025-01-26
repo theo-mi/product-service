@@ -36,7 +36,7 @@ public class BrandService {
   /**
    * 브랜드를 추가한다.
    *
-   * @param name 브랜드 이름
+   * @param name 브랜드명
    * @return 추가된 브랜드의 id
    */
   @Transactional
@@ -50,7 +50,7 @@ public class BrandService {
    * 브랜드를 수정한다.
    *
    * @param id   브랜드 id
-   * @param name 브랜드 이름
+   * @param name 브랜드명
    * @return 수정된 브랜드의 id
    */
   @Transactional

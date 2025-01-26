@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
@@ -15,8 +16,10 @@ import lombok.NoArgsConstructor;
 public class Brand extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Comment("브랜드 ID")
   private Long id;
-  
+
+  @Comment("브랜드명")
   private String name;
 
   @Builder(access = AccessLevel.PRIVATE)
@@ -39,9 +42,9 @@ public class Brand extends BaseEntity {
   }
 
   /**
-   * 브랜드 이름을 수정한다.
+   * 브랜드명을 수정한다.
    *
-   * @param name 수정할 브랜드 이름
+   * @param name 수정할 브랜드명
    */
   public void updateName(String name) {
     this.name = name;

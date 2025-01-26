@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Product extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Comment("상품 ID")
   private Long id;
   
   @ManyToOne
@@ -28,6 +30,7 @@ public class Product extends BaseEntity {
   @JoinColumn(name = "brand_id")
   private Brand brand;
 
+  @Comment("가격")
   private BigDecimal price;
 
   @Builder(access = AccessLevel.PRIVATE)

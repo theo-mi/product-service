@@ -22,9 +22,9 @@ public class CategoryService {
   }
 
   /**
-   * 이름으로 카테고리를 조회한다.
+   * 카테고리명으로 카테고리를 조회한다.
    *
-   * @param name 카테고리 이름
+   * @param name 카테고리명
    * @return 카테고리
    */
   public Category getByName(String name) {
