@@ -23,6 +23,17 @@ public class BrandService {
   }
 
   /**
+   * id로 브랜드를 조회한다.
+   *
+   * @param id 브랜드 id
+   * @return 브랜드
+   */
+  public Brand getById(Long id) {
+    return brandRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException(String.format("해당 브랜드가 존재하지 않습니다. (id: %d)", id)));
+  }
+
+  /**
    * 브랜드를 추가한다.
    *
    * @param name 브랜드 이름
