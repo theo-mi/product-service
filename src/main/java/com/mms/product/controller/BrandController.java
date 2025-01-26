@@ -2,6 +2,10 @@ package com.mms.product.controller;
 
 import com.mms.product.model.request.BrandRequest;
 import com.mms.product.service.BrandService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "브랜드 API", description = "브랜드와 관련된 API 목록입니다.")
 @RestController
 @RequestMapping("brands")
 @RequiredArgsConstructor
@@ -19,12 +24,10 @@ public class BrandController {
 
   private final BrandService brandService;
 
-  /**
-   * 브랜드를 추가한다.
-   *
-   * @param request 브랜드 등록 요청
-   * @return 브랜드 ID
-   */
+  @Operation(summary = "브랜드 추가", description = "등록된 브랜드의 id를 반환.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "등록 완료"),
+  })
   @PostMapping
   public ResponseEntity<Long> addBrand(@RequestBody BrandRequest request) {
     final Long brandId = brandService.add(request.getName());
@@ -32,13 +35,10 @@ public class BrandController {
     return ResponseEntity.ok(brandId);
   }
 
-  /**
-   * 브랜드를 수정한다.
-   *
-   * @param id      브랜드 ID
-   * @param request 브랜드 수정 요청
-   * @return 브랜드 ID
-   */
+  @Operation(summary = "브랜드 수정", description = "수정된 브랜드의 id를 반환.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "수정 완료"),
+  })
   @PutMapping("/{id}")
   public ResponseEntity<Long> updateBrand(@PathVariable Long id, @RequestBody BrandRequest request) {
     final Long brandId = brandService.update(id, request.getName());
@@ -46,12 +46,10 @@ public class BrandController {
     return ResponseEntity.ok(brandId);
   }
 
-  /**
-   * 브랜드를 삭제한다.
-   *
-   * @param id 브랜드 ID
-   * @return 브랜드 ID
-   */
+  @Operation(summary = "브랜드 삭제", description = "삭제된 브랜드의 id를 반환.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "삭제 완료"),
+  })
   @DeleteMapping("/{id}")
   public ResponseEntity<Long> deleteBrand(@PathVariable Long id) {
     final Long brandId = brandService.delete(id);

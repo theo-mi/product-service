@@ -5,12 +5,17 @@ import com.mms.product.model.entity.Product;
 import com.mms.product.model.response.MinMaxProductResponse;
 import com.mms.product.service.CategoryService;
 import com.mms.product.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "가격 API", description = "가격과 관련된 API 목록입니다.")
 @RestController
 @RequestMapping("prices")
 @RequiredArgsConstructor
@@ -19,12 +24,10 @@ public class PriceController {
   private final CategoryService categoryService;
   private final ProductService productService;
 
-  /**
-   * 카테고리별 최저가, 최고가 상품을 조회한다.
-   *
-   * @param categoryName 카테고리 이름
-   * @return 카테고리별 최저가, 최고가 상품
-   */
+  @Operation(summary = "카테고리별 최저가, 최고가 조회", description = "카테고리별 최저/최고가 반환.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "조회 성공"),
+  })
   @GetMapping("/min-max")
   public ResponseEntity<MinMaxProductResponse> getMinMaxPriceByCategory(String categoryName) {
     final Category category = categoryService.getByName(categoryName);
