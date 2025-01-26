@@ -1,6 +1,6 @@
 package com.mms.product.repository;
 
-import com.mms.product.model.Category;
+import com.mms.product.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

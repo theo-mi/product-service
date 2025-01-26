@@ -1,8 +1,8 @@
 package com.mms.product.service;
 
-import com.mms.product.model.Brand;
-import com.mms.product.model.Category;
-import com.mms.product.model.Product;
+import com.mms.product.model.entity.Brand;
+import com.mms.product.model.entity.Category;
+import com.mms.product.model.entity.Product;
 import com.mms.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;

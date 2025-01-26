@@ -1,9 +1,9 @@
 package com.mms.product.service;
 
-import com.mms.product.model.Brand;
-import com.mms.product.model.Category;
 import com.mms.product.model.Outfit;
-import com.mms.product.model.Product;
+import com.mms.product.model.entity.Brand;
+import com.mms.product.model.entity.Category;
+import com.mms.product.model.entity.Product;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

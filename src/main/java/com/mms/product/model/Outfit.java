@@ -1,5 +1,7 @@
 package com.mms.product.model;
 
+import com.mms.product.model.entity.Category;
+import com.mms.product.model.entity.Product;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;

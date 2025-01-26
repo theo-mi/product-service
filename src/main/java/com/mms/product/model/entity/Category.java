@@ -1,4 +1,4 @@
-package com.mms.product.model;
+package com.mms.product.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Category {
+public class Category extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

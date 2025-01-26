@@ -1,6 +1,6 @@
 package com.mms.product.repository;
 
-import com.mms.product.model.Product;
+import com.mms.product.model.entity.Product;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

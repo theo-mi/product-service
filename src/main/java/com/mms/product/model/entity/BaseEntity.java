@@ -1,4 +1,4 @@
-package com.mms.product.model;
+package com.mms.product.model.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

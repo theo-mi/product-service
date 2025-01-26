@@ -1,6 +1,6 @@
 package com.mms.product.service;
 
-import com.mms.product.model.Category;
+import com.mms.product.model.entity.Category;
 import com.mms.product.repository.CategoryRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

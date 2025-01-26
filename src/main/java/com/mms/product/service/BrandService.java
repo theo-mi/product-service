@@ -1,6 +1,6 @@
 package com.mms.product.service;
 
-import com.mms.product.model.Brand;
+import com.mms.product.model.entity.Brand;
 import com.mms.product.repository.BrandRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
