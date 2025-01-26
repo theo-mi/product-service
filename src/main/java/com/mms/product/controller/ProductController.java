@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +32,7 @@ public class ProductController {
       @ApiResponse(responseCode = "200", description = "등록 완료"),
   })
   @PostMapping
-  public ResponseEntity<Long> addProduct(@RequestBody ProductRequest request) {
+  public ResponseEntity<Long> addProduct(@Valid @RequestBody ProductRequest request) {
 
     final Long productId = productService.add(request.getCategoryId(), request.getBrandId(), request.getPrice());
 
@@ -46,7 +47,7 @@ public class ProductController {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
   })
   @PutMapping("/{id}")
-  public ResponseEntity<Long> updateProduct(@PathVariable Long id, @RequestBody ProductRequest request) {
+  public ResponseEntity<Long> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequest request) {
     final Long productId = productService.update(id, request.getCategoryId(), request.getBrandId(), request.getPrice());
 
     return ResponseEntity.ok(productId);

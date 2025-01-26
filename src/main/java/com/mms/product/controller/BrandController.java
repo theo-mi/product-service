@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +32,7 @@ public class BrandController {
       @ApiResponse(responseCode = "200", description = "등록 완료"),
   })
   @PostMapping
-  public ResponseEntity<Long> addBrand(@RequestBody BrandRequest request) {
+  public ResponseEntity<Long> addBrand(@Valid @RequestBody BrandRequest request) {
     final Long brandId = brandService.add(request.getName());
 
     return ResponseEntity.ok(brandId);
@@ -45,7 +46,7 @@ public class BrandController {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
   })
   @PutMapping("/{id}")
-  public ResponseEntity<Long> updateBrand(@PathVariable Long id, @RequestBody BrandRequest request) {
+  public ResponseEntity<Long> updateBrand(@PathVariable Long id, @Valid @RequestBody BrandRequest request) {
     final Long brandId = brandService.update(id, request.getName());
 
     return ResponseEntity.ok(brandId);
