@@ -1,10 +1,13 @@
 package com.mms.product.controller;
 
 import com.mms.product.model.request.ProductRequest;
+import com.mms.product.model.response.error.DefaultErrorResponse;
 import com.mms.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +36,8 @@ public class ProductController {
   @Operation(summary = "상품 추가", description = "등록된 상품의 id를 반환.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "등록 완료"),
+      @ApiResponse(responseCode = "400", description = "삭제 실패", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
+      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음.", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
   })
   @PostMapping
   public ResponseEntity<Long> addProduct(@RequestBody @Valid ProductRequest request) {
@@ -48,6 +53,8 @@ public class ProductController {
   )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
+      @ApiResponse(responseCode = "400", description = "삭제 실패", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
+      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음.", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
   })
   @PutMapping("/{id}")
   public ResponseEntity<Long> updateProduct(@PathVariable @Min(1) Long id, @RequestBody @Valid ProductRequest request) {
@@ -62,6 +69,8 @@ public class ProductController {
   )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "삭제 완료"),
+      @ApiResponse(responseCode = "400", description = "삭제 실패", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
+      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음.", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<Long> deleteProduct(@PathVariable @Min(1) Long id) {
