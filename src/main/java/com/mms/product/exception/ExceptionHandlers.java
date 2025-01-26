@@ -2,6 +2,7 @@ package com.mms.product.exception;
 
 import com.mms.product.model.response.DefaultErrorDetailResponse;
 import com.mms.product.model.response.DefaultErrorResponse;
+import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,14 @@ public class ExceptionHandlers {
         .body(DefaultErrorResponse.fail(e.getMessage()));
   }
 
+  /**
+   * RequestBody의 Validation에 실패한 경우 발생하는 Exception을 처리한다.
+   *
+   * @param e HandlerMethodValidationException
+   * @return ResponseEntity
+   */
   @ExceptionHandler(HandlerMethodValidationException.class)
-  public ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException e) {
+  public ResponseEntity<DefaultErrorResponse> handleHandlerMethodValidationException(HandlerMethodValidationException e) {
     List<DefaultErrorDetailResponse> errorDetails = e.getParameterValidationResults().stream()
         .map(result ->
             DefaultErrorDetailResponse.builder()
@@ -45,8 +52,35 @@ public class ExceptionHandlers {
         .body(DefaultErrorResponse.fail("입력값에 오류가 있습니다.", errorDetails));
   }
 
+  /**
+   * RequestParam, PathVariable의 Validation에 실패한 경우 발생하는 Exception을 처리한다.
+   *
+   * @param e
+   * @return
+   */
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<DefaultErrorResponse> handleConstraintViolationException(ConstraintViolationException e) {
+    List<DefaultErrorDetailResponse> errorDetails = e.getConstraintViolations().stream()
+        .map(violation -> DefaultErrorDetailResponse.builder()
+            .field(violation.getPropertyPath().toString())
+            .value(String.valueOf(violation.getInvalidValue()))
+            .message(violation.getMessage())
+            .build())
+        .toList();
+
+    return ResponseEntity
+        .badRequest()
+        .body(DefaultErrorResponse.fail("입력값에 오류가 있습니다.", errorDetails));
+  }
+
+  /**
+   * 스프링 3.2 이상에서 발생하는 Validation Exception을 처리한다. (현재는 막아둠)
+   *
+   * @param e MethodArgumentNotValidException
+   * @return ResponseEntity
+   */
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+  public ResponseEntity<DefaultErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
 
     List<DefaultErrorDetailResponse> errorDetails = e.getFieldErrors().stream()
         .map(fieldError -> DefaultErrorDetailResponse.builder()

@@ -9,8 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("products")
 @RequiredArgsConstructor
+@Validated
 public class ProductController {
 
   private final ProductService productService;
@@ -32,7 +35,7 @@ public class ProductController {
       @ApiResponse(responseCode = "200", description = "등록 완료"),
   })
   @PostMapping
-  public ResponseEntity<Long> addProduct(@Valid @RequestBody ProductRequest request) {
+  public ResponseEntity<Long> addProduct(@RequestBody @Valid ProductRequest request) {
 
     final Long productId = productService.add(request.getCategoryId(), request.getBrandId(), request.getPrice());
 
@@ -47,7 +50,7 @@ public class ProductController {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
   })
   @PutMapping("/{id}")
-  public ResponseEntity<Long> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequest request) {
+  public ResponseEntity<Long> updateProduct(@PathVariable @Min(1) Long id, @RequestBody @Valid ProductRequest request) {
     final Long productId = productService.update(id, request.getCategoryId(), request.getBrandId(), request.getPrice());
 
     return ResponseEntity.ok(productId);
@@ -61,7 +64,7 @@ public class ProductController {
       @ApiResponse(responseCode = "200", description = "삭제 완료"),
   })
   @DeleteMapping("/{id}")
-  public ResponseEntity<Long> deleteProduct(@PathVariable Long id) {
+  public ResponseEntity<Long> deleteProduct(@PathVariable @Min(1) Long id) {
     final Long productId = productService.delete(id);
 
     return ResponseEntity.ok(productId);

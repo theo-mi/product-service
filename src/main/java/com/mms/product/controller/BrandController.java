@@ -8,8 +8,11 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("brands")
 @RequiredArgsConstructor
+@Validated
 public class BrandController {
 
   private final BrandService brandService;
@@ -31,7 +35,7 @@ public class BrandController {
       @ApiResponse(responseCode = "200", description = "등록 완료"),
   })
   @PostMapping
-  public ResponseEntity<Long> addBrand(@RequestBody BrandRequest request) {
+  public ResponseEntity<Long> addBrand(@RequestBody @Valid BrandRequest request) {
     final Long brandId = brandService.add(request.getName());
 
     return ResponseEntity.ok(brandId);
@@ -45,7 +49,7 @@ public class BrandController {
       @ApiResponse(responseCode = "200", description = "수정 완료"),
   })
   @PutMapping("/{id}")
-  public ResponseEntity<Long> updateBrand(@PathVariable Long id, @RequestBody BrandRequest request) {
+  public ResponseEntity<Long> updateBrand(@PathVariable @Min(1) Long id, @Valid @RequestBody BrandRequest request) {
     final Long brandId = brandService.update(id, request.getName());
 
     return ResponseEntity.ok(brandId);
@@ -59,7 +63,7 @@ public class BrandController {
       @ApiResponse(responseCode = "200", description = "삭제 완료"),
   })
   @DeleteMapping("/{id}")
-  public ResponseEntity<Long> deleteBrand(@PathVariable Long id) {
+  public ResponseEntity<Long> deleteBrand(@PathVariable @Min(1) Long id) {
     final Long brandId = brandService.delete(id);
 
     return ResponseEntity.ok(brandId);

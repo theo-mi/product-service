@@ -11,8 +11,10 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("prices")
 @RequiredArgsConstructor
+@Validated
 public class PriceController {
 
   private final CategoryService categoryService;
@@ -34,7 +37,7 @@ public class PriceController {
       @ApiResponse(responseCode = "200", description = "조회 성공"),
   })
   @GetMapping("/min-max")
-  public ResponseEntity<MinMaxProductResponse> getMinMaxPriceByCategory(String categoryName) {
+  public ResponseEntity<MinMaxProductResponse> getMinMaxPriceByCategory(@NotBlank String categoryName) {
     final Category category = categoryService.getByName(categoryName);
 
     final Product cheapestProduct = productService.getCheapestByCategory(category);
