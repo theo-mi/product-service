@@ -30,4 +30,15 @@ public class CategoryService {
   public Category getByName(String name) {
     return categoryRepository.findByName(name);
   }
+  
+  /**
+   * id로 카테고리를 조회한다.
+   *
+   * @param id
+   * @return
+   */
+  public Category getById(Long id) {
+    return categoryRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException(String.format("해당 카테고리가 존재하지 않습니다. (id: %d)", id)));
+  }
 }
