@@ -28,7 +28,8 @@ public class CategoryService {
    * @return 카테고리
    */
   public Category getByName(String name) {
-    return categoryRepository.findByName(name);
+    return categoryRepository.findByName(name)
+        .orElseThrow(() -> new IllegalArgumentException(String.format("해당 카테고리가 존재하지 않습니다. (name: %s)", name)));
   }
   
   /**
