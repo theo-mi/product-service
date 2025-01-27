@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,5 +62,21 @@ public class Product extends BaseEntity {
     this.category = category;
     this.brand = brand;
     this.price = price;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Product product)) {
+      return false;
+    }
+    return Objects.equals(id, product.id)
+           && Objects.equals(category, product.category)
+           && Objects.equals(brand, product.brand)
+           && Objects.equals(price, product.price);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, category, brand, price);
   }
 }

@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -84,6 +85,7 @@ public class ProductService {
    * @return 추가된 상품의 id
    */
   @Transactional
+  @CacheEvict(value = {"cheapestOutfit", "cheapestOutfitByBrand"}, allEntries = true)
   public Long add(Long categoryId, Long brandId, BigDecimal price) {
     final Category category = categoryService.getById(categoryId);
     final Brand brand = brandService.getById(brandId);
@@ -103,6 +105,7 @@ public class ProductService {
    * @return 수정된 상품의 id
    */
   @Transactional
+  @CacheEvict(value = {"cheapestOutfit", "cheapestOutfitByBrand"}, allEntries = true)
   public Long update(Long productId, Long categoryId, Long brandId, BigDecimal price) {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> NotFoundErrorFormat.PRODUCT_ID.toException(productId));
@@ -122,6 +125,7 @@ public class ProductService {
    * @return 삭제된 상품 id
    */
   @Transactional
+  @CacheEvict(value = {"cheapestOutfit", "cheapestOutfitByBrand"}, allEntries = true)
   public Long delete(Long id) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> NotFoundErrorFormat.PRODUCT_ID.toException(id));

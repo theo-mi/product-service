@@ -6,6 +6,7 @@ import com.mms.product.model.entity.Category;
 import com.mms.product.model.entity.Product;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +20,7 @@ public class OutfitService {
   /**
    * 가장 저렴한 옷 조합을 조회한다.
    */
+  @Cacheable(value = "cheapestOutfit")
   public Outfit getCheapestOutfit() {
     final List<Category> categories = categoryService.getAllCategories();
 
@@ -36,6 +38,7 @@ public class OutfitService {
    *
    * @return 가장 저렴한 브랜드의 옷 조합
    */
+  @Cacheable(value = "cheapestOutfitByBrand")
   public Outfit getCheapestOutfitByBrand() {
     final List<Category> categories = categoryService.getAllCategories();
 

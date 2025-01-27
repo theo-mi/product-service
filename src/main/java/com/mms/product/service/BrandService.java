@@ -9,6 +9,7 @@ import com.mms.product.repository.BrandRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,6 +46,7 @@ public class BrandService {
    * @return 추가된 브랜드의 id
    */
   @Transactional
+  @CacheEvict(value = {"cheapestOutfit", "cheapestOutfitByBrand"}, allEntries = true)
   public Long add(String name) {
     Brand brand = brandRepository.save(Brand.of(name));
 
@@ -59,6 +61,7 @@ public class BrandService {
    * @return 수정된 브랜드의 id
    */
   @Transactional
+  @CacheEvict(value = {"cheapestOutfit", "cheapestOutfitByBrand"}, allEntries = true)
   public Long update(Long id, String name) {
     Brand brand = brandRepository.findById(id)
         .orElseThrow(() -> NotFoundErrorFormat.BRAND_ID.toException(id));
@@ -75,6 +78,7 @@ public class BrandService {
    * @return 삭제된 브랜드의 id
    */
   @Transactional
+  @CacheEvict(value = {"cheapestOutfit", "cheapestOutfitByBrand"}, allEntries = true)
   public Long delete(Long id) {
     Brand brand = brandRepository.findById(id)
         .orElseThrow(() -> NotFoundErrorFormat.BRAND_ID.toException(id));

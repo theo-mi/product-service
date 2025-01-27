@@ -5,6 +5,7 @@ import com.mms.product.model.entity.Product;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 
@@ -60,5 +61,18 @@ public class Outfit {
     return Outfit.builder()
         .outfit(new HashMap<>())
         .build();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Outfit other)) {
+      return false;
+    }
+    return Objects.equals(outfit, other);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(outfit);
   }
 }
