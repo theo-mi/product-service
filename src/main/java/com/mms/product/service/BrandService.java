@@ -71,6 +71,7 @@ public class BrandService {
    * @param id 브랜드 id
    * @return 삭제된 브랜드의 id
    */
+  @Transactional
   public Long delete(Long id) {
     Brand brand = brandRepository.findById(id)
         .orElseThrow(() -> NotFoundErrorFormat.BRAND_ID.toException(id));
