@@ -5,6 +5,7 @@ import com.mms.product.model.entity.Category;
 import com.mms.product.repository.CategoryRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class CategoryService {
    *
    * @return 카테고리 목록
    */
+  @Cacheable(value = "categories")
   public List<Category> getAllCategories() {
     return categoryRepository.findAll();
   }
@@ -28,6 +30,7 @@ public class CategoryService {
    * @param name 카테고리명
    * @return 카테고리
    */
+  @Cacheable(value = "category", key = "'name:' + #name")
   public Category getByName(String name) {
     return categoryRepository.findByName(name)
         .orElseThrow(() -> NotFoundErrorFormat.CATEGORY_NAME.toException(name));
@@ -40,6 +43,7 @@ public class CategoryService {
    * @param id
    * @return
    */
+  @Cacheable(value = "category", key = "'id:' + #id")
   public Category getById(Long id) {
     return categoryRepository.findById(id)
         .orElseThrow(() -> NotFoundErrorFormat.CATEGORY_ID.toException(id));
