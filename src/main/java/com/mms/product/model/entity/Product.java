@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Objects;
 import lombok.AccessLevel;
@@ -20,6 +22,7 @@ import org.hibernate.annotations.Comment;
 public class Product extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Positive
   @Comment("상품 ID")
   private Long id;
   
@@ -31,6 +34,7 @@ public class Product extends BaseEntity {
   @JoinColumn(name = "brand_id")
   private Brand brand;
 
+  @Min(0)
   @Comment("가격")
   private BigDecimal price;
 
