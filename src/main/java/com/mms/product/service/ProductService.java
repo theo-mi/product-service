@@ -69,7 +69,7 @@ public class ProductService {
       throw new NotFoundException(String.format("해당 카테고리에 상품이 존재하지 않아 코디가 불가능합니다. (category: %s)", category.getName()));
     }
 
-    return cheapestProductByBrandAndCategory.getLast();
+    return cheapestProductByBrandAndCategory.getFirst();
   }
 
   /**
