@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +44,9 @@ public class BrandController {
   public ResponseEntity<Long> addBrand(@RequestBody @Valid BrandRequest request) {
     final Long brandId = brandService.add(request.getName());
 
-    return ResponseEntity.ok(brandId);
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(brandId);
   }
 
   @Operation(summary = "브랜드 수정", description = "수정된 브랜드의 id를 반환.")

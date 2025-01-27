@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,9 @@ public class ProductController {
 
     final Long productId = productService.add(request.getCategoryId(), request.getBrandId(), request.getPrice());
 
-    return ResponseEntity.ok(productId);
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(productId);
   }
 
   @Operation(summary = "상품 수정", description = "수정된 상품의 id를 반환.")
