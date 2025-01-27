@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,9 +19,11 @@ import org.hibernate.annotations.Comment;
 public class Brand extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Positive
   @Comment("브랜드 ID")
   private Long id;
 
+  @Size(min = 1, max = 50)
   @Comment("브랜드명")
   private String name;
 
@@ -41,5 +46,18 @@ public class Brand extends BaseEntity {
    */
   public void updateName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Brand brand)) {
+      return false;
+    }
+    return Objects.equals(id, brand.id) && Objects.equals(name, brand.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
   }
 }
