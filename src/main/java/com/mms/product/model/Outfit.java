@@ -14,7 +14,11 @@ public class Outfit {
   Map<Category, Product> outfit;
 
   public void add(Category category, Product product) {
-    //TODO: 이미 존재하는 카테고리가 들어온다면 어떻게 해야하나?
+    if (outfit.containsKey(category)) {
+      // 정확한 정책이 만들어지면 예외 처리를 변경해야 함. 현재는 동일 카테고리가 들어올 수 없는 로직이기에 막아둠.
+      throw new IllegalArgumentException("이미 해당 코디의 카테고리에 상품이 존재합니다.");
+    }
+
     outfit.put(category, product);
   }
 
