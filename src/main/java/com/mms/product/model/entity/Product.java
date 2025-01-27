@@ -9,14 +9,19 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
+@SQLRestriction("deleted_at is NULL")
+@SQLDelete(sql = "UPDATE product SET deleted_at = now() WHERE id = ?")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseEntity {
@@ -66,6 +71,13 @@ public class Product extends BaseEntity {
     this.category = category;
     this.brand = brand;
     this.price = price;
+  }
+
+  /**
+   * 상품을 삭제한다.
+   */
+  public void delete() {
+    this.deletedAt = LocalDateTime.now();
   }
 
   @Override

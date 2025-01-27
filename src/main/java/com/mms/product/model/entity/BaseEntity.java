@@ -16,10 +16,13 @@ public class BaseEntity {
   @ColumnDefault(value = "CURRENT_TIMESTAMP")
   @CreatedDate
   @Comment("등록 시각")
-  private LocalDateTime createdAt;
+  protected LocalDateTime createdAt;
 
   @ColumnDefault(value = "CURRENT_TIMESTAMP")
   @LastModifiedDate
   @Comment("수정 시각")
-  private LocalDateTime updatedAt;
+  protected LocalDateTime updatedAt;
+
+  @Comment("삭제 시각")
+  protected LocalDateTime deletedAt;
 }

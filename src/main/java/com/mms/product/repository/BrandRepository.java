@@ -13,36 +13,39 @@ import org.springframework.stereotype.Repository;
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
   @Query(value = """
-      WITH category_count AS (
-          SELECT COUNT(c.id) AS total_categories
+      WITH selected_category_count AS (
+            SELECT COUNT(c.id) AS total
           FROM category c
           WHERE c.id IN (:categoryIds)
       ),
-      brand_category_min_price AS (
-          SELECT
-              p.brand_id         AS brand_id,
-              p.category_id      AS category_id,
-              MIN(p.price)       AS min_price
+        brand_min_prices AS (
+            SELECT\s
+                p.brand_id    AS brand_id,
+                p.category_id AS category_id,
+                MIN(p.price)  AS min_price
           FROM product p
           WHERE p.category_id IN (:categoryIds)
+              AND p.deleted_at IS NULL
           GROUP BY p.brand_id, p.category_id
       ),
-      brand_total_price AS (
-          SELECT
-              bcmp.brand_id       AS brand_id,
-              SUM(bcmp.min_price) AS total_price,
-              COUNT(bcmp.category_id) AS covered_categories
-          FROM brand_category_min_price bcmp
-          GROUP BY bcmp.brand_id
+        brand_aggregates AS (
+            SELECT\s
+                bmp.brand_id              AS brand_id,
+                SUM(bmp.min_price)        AS total_price,
+                COUNT(bmp.category_id)    AS covered
+            FROM brand_min_prices bmp
+            JOIN brand b ON b.id = bmp.brand_id
+                        AND b.deleted_at IS NULL
+            GROUP BY bmp.brand_id
       )
-      SELECT
-          btp.brand_id       AS brandId,
-          btp.total_price    AS totalPrice
-      FROM brand_total_price btp
-      JOIN category_count cc
-        ON btp.covered_categories = cc.total_categories
-      ORDER BY btp.total_price
-      LIMIT 1;
+        SELECT\s
+            ba.brand_id    AS brandId,
+            ba.total_price AS totalPrice
+        FROM brand_aggregates ba
+        JOIN selected_category_count scc
+            ON ba.covered = scc.total
+        ORDER BY ba.total_price
+        LIMIT 1
       """,
       nativeQuery = true)
   Optional<CheapestBrandDto> findCheapestBrandWithCategories(@Param("categoryIds") List<Long> categoryIds);
