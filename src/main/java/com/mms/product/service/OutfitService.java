@@ -1,5 +1,6 @@
 package com.mms.product.service;
 
+import com.mms.product.exception.NotFoundException;
 import com.mms.product.model.Outfit;
 import com.mms.product.model.entity.Brand;
 import com.mms.product.model.entity.Category;
@@ -30,6 +31,10 @@ public class OutfitService {
       outfit.add(category, cheapestProductByCategory.getLast());
     });
 
+    if (outfit.isEmpty()) {
+      throw new NotFoundException("카테고리 혹은 상품이 존재하지 않아 코디가 불가능합니다.");
+    }
+
     return outfit;
   }
 
@@ -49,6 +54,10 @@ public class OutfitService {
       Product cheapestProductByBrand = productService.getCheapestBy(cheapestBrand, category);
       cheapestBrandOutfit.add(category, cheapestProductByBrand);
       }
+
+    if (cheapestBrandOutfit.isEmpty()) {
+      throw new NotFoundException("카테고리 혹은 상품이 존재하지 않아 코디가 불가능합니다.");
+    }
 
     return cheapestBrandOutfit;
   }
