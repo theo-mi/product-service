@@ -36,9 +36,9 @@ public class BrandController {
 
   @Operation(summary = "브랜드 추가", description = "등록된 브랜드의 id를 반환.")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "등록 완료"),
+      @ApiResponse(responseCode = "201", description = "등록 성공"),
       @ApiResponse(responseCode = "400", description = "등록 실패", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
-      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음.", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
+      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
   })
   @PostMapping
   public ResponseEntity<Long> addBrand(@RequestBody @Valid BrandRequest request) {
@@ -54,9 +54,9 @@ public class BrandController {
       @Parameter(name = "id", description = "브랜드 id", example = "10", required = true)
   )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "수정 완료"),
+      @ApiResponse(responseCode = "200", description = "수정 성공"),
       @ApiResponse(responseCode = "400", description = "수정 실패", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
-      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음.", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
+      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
   })
   @PutMapping("/{id}")
   public ResponseEntity<Long> updateBrand(@PathVariable @Min(1) Long id, @Valid @RequestBody BrandRequest request) {
@@ -70,9 +70,9 @@ public class BrandController {
       @Parameter(name = "id", description = "브랜드 id", example = "10", required = true)
   )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "삭제 완료"),
+      @ApiResponse(responseCode = "200", description = "삭제 성공"),
       @ApiResponse(responseCode = "400", description = "삭제 실패", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
-      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음.", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
+      @ApiResponse(responseCode = "404", description = "데이터를 찾을 수 없음", content = @Content(schema = @Schema(implementation = DefaultErrorResponse.class))),
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<Long> deleteBrand(@PathVariable @Min(1) Long id) {
