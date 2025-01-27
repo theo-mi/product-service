@@ -1,6 +1,6 @@
 package com.mms.product.service;
 
-import com.mms.product.exception.NotFoundException;
+import com.mms.product.enums.exception.NotFoundErrorFormat;
 import com.mms.product.model.entity.Category;
 import com.mms.product.repository.CategoryRepository;
 import java.util.List;
@@ -30,7 +30,8 @@ public class CategoryService {
    */
   public Category getByName(String name) {
     return categoryRepository.findByName(name)
-        .orElseThrow(() -> new NotFoundException(String.format("해당 카테고리가 존재하지 않습니다. (name: %s)", name)));
+        .orElseThrow(() -> NotFoundErrorFormat.CATEGORY_NAME.toException(name));
+
   }
   
   /**
@@ -41,6 +42,7 @@ public class CategoryService {
    */
   public Category getById(Long id) {
     return categoryRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException(String.format("해당 카테고리가 존재하지 않습니다. (id: %d)", id)));
+        .orElseThrow(() -> NotFoundErrorFormat.CATEGORY_ID.toException(id));
+
   }
 }

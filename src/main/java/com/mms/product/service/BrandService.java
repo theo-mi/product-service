@@ -1,6 +1,6 @@
 package com.mms.product.service;
 
-import com.mms.product.exception.NotFoundException;
+import com.mms.product.enums.exception.NotFoundErrorFormat;
 import com.mms.product.model.entity.Brand;
 import com.mms.product.repository.BrandRepository;
 import jakarta.transaction.Transactional;
@@ -31,7 +31,8 @@ public class BrandService {
    */
   public Brand getById(Long id) {
     return brandRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException(String.format("해당 브랜드가 존재하지 않습니다. (id: %d)", id)));
+        .orElseThrow(() -> NotFoundErrorFormat.BRAND_ID.toException(id));
+
   }
 
   /**
@@ -57,7 +58,7 @@ public class BrandService {
   @Transactional
   public Long update(Long id, String name) {
     Brand brand = brandRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException(String.format("해당 브랜드가 존재하지 않습니다. (id: %d)", id)));
+        .orElseThrow(() -> NotFoundErrorFormat.BRAND_ID.toException(id));
 
     brand.updateName(name);
 
@@ -72,7 +73,7 @@ public class BrandService {
    */
   public Long delete(Long id) {
     Brand brand = brandRepository.findById(id)
-        .orElseThrow(() -> new NotFoundException(String.format("해당 브랜드가 존재하지 않습니다. (id: %d)", id)));
+        .orElseThrow(() -> NotFoundErrorFormat.BRAND_ID.toException(id));
 
     brandRepository.deleteById(brand.getId());
 
