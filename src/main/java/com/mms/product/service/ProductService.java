@@ -65,9 +65,13 @@ public class ProductService {
    * @return 최저가 상품
    */
   public Product getCheapestBy(Brand brand, Category category) {
-    final List<Product> minPriceProductByBrandAndCategory = productRepository.findMinPriceProductByBrandAndCategory(category.getId(), brand.getId());
+    final List<Product> cheapestProductByBrandAndCategory = productRepository.findMinPriceProductByBrandAndCategory(category.getId(), brand.getId());
 
-    return minPriceProductByBrandAndCategory.getLast();
+    if (cheapestProductByBrandAndCategory.isEmpty()) {
+      throw new NotFoundException(String.format("해당 카테고리에 상품이 존재하지 않아 코디가 불가능합니다. (category: %s)", category.getName()));
+    }
+
+    return cheapestProductByBrandAndCategory.getLast();
   }
 
   /**
