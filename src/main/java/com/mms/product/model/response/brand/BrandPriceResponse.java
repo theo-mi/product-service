@@ -1,4 +1,4 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.brand;
 
 import com.mms.product.model.entity.Product;
 import java.math.BigDecimal;
@@ -8,20 +8,14 @@ import lombok.Getter;
 
 @Builder(access = AccessLevel.PRIVATE)
 @Getter
-public class ProductResponse {
+public class BrandPriceResponse {
 
-  private Long id;
-  private Long categoryId;
-  private String categoryName;
   private Long brandId;
   private String brandName;
   private BigDecimal price;
 
-  public static ProductResponse from(Product product) {
-    return ProductResponse.builder()
-        .id(product.getId())
-        .categoryId(product.getCategory().getId())
-        .categoryName(product.getCategory().getName())
+  public static BrandPriceResponse from(Product product) {
+    return BrandPriceResponse.builder()
         .brandId(product.getBrand().getId())
         .brandName(product.getBrand().getName())
         .price(product.getPrice())

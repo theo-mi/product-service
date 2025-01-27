@@ -1,8 +1,8 @@
 package com.mms.product.controller;
 
 import com.mms.product.model.Outfit;
-import com.mms.product.model.response.CheapestBrandOutfitResponse;
-import com.mms.product.model.response.OutfitResponse;
+import com.mms.product.model.response.outfit.CheapestBrandOutfitResponse;
+import com.mms.product.model.response.outfit.OutfitResponse;
 import com.mms.product.service.OutfitService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

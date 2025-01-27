@@ -1,7 +1,8 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.outfit;
 
 import com.mms.product.model.Outfit;
 import com.mms.product.model.entity.Product;
+import com.mms.product.model.response.category.CategoryPriceResponse;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.AccessLevel;

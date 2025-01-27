@@ -1,4 +1,4 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.outfit;
 
 import com.mms.product.model.Outfit;
 import lombok.AccessLevel;

@@ -2,7 +2,7 @@ package com.mms.product.controller;
 
 import com.mms.product.model.entity.Category;
 import com.mms.product.model.entity.Product;
-import com.mms.product.model.response.MinMaxProductResponse;
+import com.mms.product.model.response.product.MinMaxProductResponse;
 import com.mms.product.service.CategoryService;
 import com.mms.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;

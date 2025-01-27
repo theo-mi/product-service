@@ -1,4 +1,4 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.category;
 
 import com.mms.product.model.entity.Product;
 import java.math.BigDecimal;

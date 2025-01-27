@@ -1,7 +1,8 @@
-package com.mms.product.model.response;
+package com.mms.product.model.response.product;
 
 import com.mms.product.model.entity.Category;
 import com.mms.product.model.entity.Product;
+import com.mms.product.model.response.brand.BrandPriceResponse;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
