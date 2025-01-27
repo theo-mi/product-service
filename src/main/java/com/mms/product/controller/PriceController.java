@@ -32,7 +32,7 @@ public class PriceController {
 
   @Operation(summary = "카테고리별 최저가, 최고가 조회", description = "카테고리별 최저/최고가 반환.")
   @Parameters(
-      @Parameter(name = "categoryName", description = "카테고리명", required = true)
+      @Parameter(name = "categoryName", description = "카테고리명", example = "상의", required = true)
   )
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "조회 성공"),
