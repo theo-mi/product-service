@@ -2,7 +2,7 @@ package com.mms.product.model.response.product;
 
 import com.mms.product.model.entity.Category;
 import com.mms.product.model.entity.Product;
-import com.mms.product.model.response.brand.BrandPriceResponses;
+import com.mms.product.model.response.brand.BrandPriceResponse;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,15 +14,23 @@ public class MinMaxProductResponse {
 
   private Long categoryId;
   private String categoryName;
-  private BrandPriceResponses minPrices;
-  private BrandPriceResponses maxPrices;
+  private List<BrandPriceResponse> minPrices;
+  private List<BrandPriceResponse> maxPrices;
 
-  public static MinMaxProductResponse from(Category category, List<Product> minPriceProducts, List<Product> maxPriceProducts) {
+  public static MinMaxProductResponse from(Category category, List<Product> cheapestProducts, List<Product> expensiveProducts) {
+    List<BrandPriceResponse> minPriceResponses = cheapestProducts.stream()
+        .map(BrandPriceResponse::from)
+        .toList();
+
+    List<BrandPriceResponse> maxPriceResponses = expensiveProducts.stream()
+        .map(BrandPriceResponse::from)
+        .toList();
+
     return MinMaxProductResponse.builder()
         .categoryId(category.getId())
         .categoryName(category.getName())
-        .minPrices(BrandPriceResponses.from(minPriceProducts))
-        .maxPrices(BrandPriceResponses.from(maxPriceProducts))
+        .minPrices(minPriceResponses)
+        .maxPrices(maxPriceResponses)
         .build();
   }
 }
