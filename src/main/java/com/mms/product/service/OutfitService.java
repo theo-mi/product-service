@@ -26,8 +26,8 @@ public class OutfitService {
 
     Outfit outfit = Outfit.of();
     categories.forEach(category -> {
-      Product cheapestProductByCategory = productService.getCheapestByCategory(category);
-      outfit.add(category, cheapestProductByCategory);
+      List<Product> cheapestProductByCategory = productService.getCheapestByCategory(category);
+      outfit.add(category, cheapestProductByCategory.getLast());
     });
 
     return outfit;

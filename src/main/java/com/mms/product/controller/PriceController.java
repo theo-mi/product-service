@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -40,10 +41,10 @@ public class PriceController {
   public ResponseEntity<MinMaxProductResponse> getMinMaxPriceByCategory(@NotBlank String categoryName) {
     final Category category = categoryService.getByName(categoryName);
 
-    final Product cheapestProduct = productService.getCheapestByCategory(category);
-    final Product expensiveProduct = productService.getExpensiveByCategory(category);
+    List<Product> cheapestProducts = productService.getCheapestByCategory(category);
+    List<Product> expensiveProducts = productService.getExpensiveByCategory(category);
 
-    MinMaxProductResponse minMaxProductResponse = MinMaxProductResponse.from(category, cheapestProduct, expensiveProduct);
+    MinMaxProductResponse minMaxProductResponse = MinMaxProductResponse.from(category, cheapestProducts, expensiveProducts);
 
     return ResponseEntity.ok(minMaxProductResponse);
   }
