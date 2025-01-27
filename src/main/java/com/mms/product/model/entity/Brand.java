@@ -28,13 +28,6 @@ public class Brand extends BaseEntity {
     this.name = name;
   }
 
-  public static Brand of(Long id, String name) {
-    return Brand.builder()
-        .id(id)
-        .name(name)
-        .build();
-  }
-
   public static Brand of(String name) {
     return Brand.builder()
         .name(name)
