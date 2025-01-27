@@ -30,6 +30,10 @@ public class ProductService {
   public Product getCheapestByCategory(Category category) {
     final List<Product> cheapestProductByCategory = productRepository.findMinPriceProductsByCategory(category.getId());
 
+    if (cheapestProductByCategory.isEmpty()) {
+      throw new NotFoundException(String.format("해당 카테고리에 상품이 존재하지 않아 코디가 불가능합니다. (category: %s)", category.getName()));
+    }
+
     // 중복된 최저가 상품이 있는 경우 마지막 상품을 반환한다. (예시에 따라 수정)
     // 현재는 별다른 정책이 없기 때문에 limit 1으로 가져오도록 수정하면 조회 성능이 더 좋아질듯.
     return cheapestProductByCategory.getLast();
@@ -43,6 +47,10 @@ public class ProductService {
    */
   public Product getExpensiveByCategory(Category category) {
     final List<Product> expensiveProductByCategory = productRepository.findMaxPriceProductsByCategory(category.getId());
+
+    if (expensiveProductByCategory.isEmpty()) {
+      throw new NotFoundException(String.format("해당 카테고리에 상품이 존재하지 않아 코디가 불가능합니다. (category: %s)", category.getName()));
+    }
 
     // 중복된 최저가 상품이 있는 경우 마지막 상품을 반환한다. (예시에 따라 수정)
     // 현재는 별다른 정책이 없기 때문에 limit 1으로 가져오도록 수정하면 조회 성능이 더 좋아질듯.
