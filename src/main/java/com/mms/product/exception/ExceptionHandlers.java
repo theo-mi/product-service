@@ -5,6 +5,7 @@ import com.mms.product.model.response.error.DefaultErrorResponse;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
+@Slf4j
 @RestControllerAdvice
 public class ExceptionHandlers {
 
@@ -97,8 +99,11 @@ public class ExceptionHandlers {
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<DefaultErrorResponse> handleException(Exception e) {
+    log.error("예상치 못한 에러가 발생했습니다.", e);
+
+    // 사용자에게 에러 내용이 그대로 보이면 안됨.
     return ResponseEntity
         .internalServerError()
-        .body(DefaultErrorResponse.fail(e.getMessage()));
+        .body(DefaultErrorResponse.fail("서버 에러가 발생하였습니다."));
   }
 }
