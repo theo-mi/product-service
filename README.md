@@ -11,6 +11,8 @@
 - Spring Data JPA
 - H2 Database
 - Spring Cache
+- JUnit5
+- FixtureMonkey
 - Swagger
 - Lombok
 - Gradle
@@ -38,6 +40,7 @@
 ## 2. 구현 범위
 
 과제 요구사항에 따른 4가지 기능을 중심으로 구현하였으며, 각 기능은 다음과 같습니다.
+또한 Unit Test 및 Integration Test를 작성하였습니다.
 
 1. **카테고리 별 최저가격 브랜드/상품 및 총액 조회**
    - `GET /outfits/cheapest`
@@ -51,8 +54,12 @@
 4. **브랜드 및 상품 등록 / 수정 / 삭제** 
    - 브랜드: `POST /brands`, `PUT /brands/{id}`, `DELETE /brands/{id}`
    - 상품: `POST /products`, `PUT /products/{id}`, `DELETE /products/{id}`
+5. **Unit Test 및 Integration Test 작성**
 
 ## 3. 주안점
+
+- 데이터 삭제시 softDelete 처리
+    - SQLRestriction, SQLDelete 어노테이션을 활용하여 삭제시 실제 데이터 삭제가 아닌 softDelete 처리 및 조회
 - **적절한 정책이 필요한 부분은 임의로 처리**
   1. 코디 요청시 최저가 브랜드가 여러개인 경우
   2. 코디 요청시 카테고리의 최저가 상품이 여러개인 경우
