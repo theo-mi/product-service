@@ -19,4 +19,16 @@ public class BrandTest {
     // then
     assertThat(brand.getName()).isEqualTo(newName);
   }
+
+  @Test
+  void 브랜드를_삭제하면_deletedAt이_설정된다() {
+    // given
+    Brand brand = FixtureUtils.monkey.giveMeOne(Brand.class);
+
+    // when
+    brand.delete();
+
+    // then
+    assertThat(brand.getDeletedAt()).isNotNull();
+  }
 }

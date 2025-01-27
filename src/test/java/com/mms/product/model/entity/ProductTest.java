@@ -24,4 +24,16 @@ public class ProductTest {
     assertThat(product.getBrand()).isEqualTo(newBrand);
     assertThat(product.getPrice()).isEqualTo(newPrice);
   }
+
+  @Test
+  void 상품을_삭제하면_deletedAt이_설정된다() {
+    // given
+    Product product = FixtureUtils.monkey.giveMeOne(Product.class);
+
+    // when
+    product.delete();
+
+    // then
+    assertThat(product.getDeletedAt()).isNotNull();
+  }
 }
