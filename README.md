@@ -55,10 +55,11 @@
    - 브랜드: `POST /brands`, `PUT /brands/{id}`, `DELETE /brands/{id}`
    - 상품: `POST /products`, `PUT /products/{id}`, `DELETE /products/{id}`
 5. **Unit Test 및 Integration Test 작성**
+    - 테스트코드 환경의 경우 캐시 비활성화 처리
 
 ## 3. 주안점
 
-- 데이터 삭제시 softDelete 처리
+- **데이터 삭제시 softDelete 처리**
     - SQLRestriction, SQLDelete 어노테이션을 활용하여 삭제시 실제 데이터 삭제가 아닌 softDelete 처리 및 조회
 - **적절한 정책이 필요한 부분은 임의로 처리**
   1. 코디 요청시 최저가 브랜드가 여러개인 경우
@@ -77,11 +78,9 @@
   - 정의되지 않은 Exception 발생시 에러 마스킹 처리
 - **Swagger내 API 명세 설명 및 호출시 파라미터 예제 상세화**
 
-
 ## 4. 프로젝트 구조
 ```
 .
-├── HELP.md                                          # Gradle/Spring 초기에 생성되는 도움말 파일
 ├── README.md
 ├── build.gradle
 └── src
