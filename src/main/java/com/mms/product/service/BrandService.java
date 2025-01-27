@@ -1,7 +1,10 @@
 package com.mms.product.service;
 
 import com.mms.product.enums.exception.NotFoundErrorFormat;
+import com.mms.product.exception.NotFoundException;
+import com.mms.product.model.dto.CheapestBrandDto;
 import com.mms.product.model.entity.Brand;
+import com.mms.product.model.entity.Category;
 import com.mms.product.repository.BrandRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -79,5 +82,22 @@ public class BrandService {
     brandRepository.deleteById(brand.getId());
 
     return id;
+  }
+
+  /**
+   * 카테고리에 속한 상품 중 가장 저렴한 브랜드를 조회한다.
+   *
+   * @param categories 카테고리 목록
+   * @return 가장 저렴한 브랜드
+   */
+  public Brand findCheapestBrandWithCategories(List<Category> categories) {
+    List<Long> categoryIds = categories.stream()
+        .map(Category::getId)
+        .toList();
+
+    CheapestBrandDto cheapestBrandDto = brandRepository.findCheapestBrandWithCategories(categoryIds)
+        .orElseThrow(() -> new NotFoundException("최저가 코디를 위한 브랜드가 존재하지 않습니다."));
+
+    return getById(cheapestBrandDto.brandId());
   }
 }

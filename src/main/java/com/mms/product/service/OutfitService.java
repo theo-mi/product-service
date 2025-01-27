@@ -37,23 +37,15 @@ public class OutfitService {
    * @return 가장 저렴한 브랜드의 옷 조합
    */
   public Outfit getCheapestOutfitByBrand() {
-    final List<Brand> brands = brandService.getAllBrands();
     final List<Category> categories = categoryService.getAllCategories();
 
+    Brand cheapestBrand = brandService.findCheapestBrandWithCategories(categories);
+
     Outfit cheapestBrandOutfit = Outfit.of();
-
-    for (Brand brand : brands) {
-      Outfit outfit = Outfit.of();
-
-      for (Category category : categories) {
-        Product cheapestProductByBrand = productService.getCheapestBy(brand, category);
-        outfit.add(category, cheapestProductByBrand);
+    for (Category category : categories) {
+      Product cheapestProductByBrand = productService.getCheapestBy(cheapestBrand, category);
+      cheapestBrandOutfit.add(category, cheapestProductByBrand);
       }
-
-      if (cheapestBrandOutfit.isEmpty() || outfit.moreThanCheapest(cheapestBrandOutfit)) {
-        cheapestBrandOutfit = outfit;
-      }
-    }
 
     return cheapestBrandOutfit;
   }
